@@ -1,14 +1,26 @@
-// src/controllers/character.controller.ts
-import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
-import { CharacterService } from '../services/character.service';
-import { CharacterDTO } from '../dto/character.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
+import { CharacterService } from './character.service';
+import { CharacterDTO } from 'src/dto/character.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
-@Controller('characters')
+@Controller('character')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
-  getAllCharacters(): Promise<CharacterDTO[]> {
+  getAllCharacters(@Req() request): Promise<CharacterDTO[]> {
+    console.log(request.user);
     return this.characterService.getAllCharacters();
   }
 

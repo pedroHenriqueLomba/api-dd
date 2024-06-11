@@ -1,18 +1,18 @@
-// src/services/character.service.ts
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Character, CharacterDocument } from '../schemas/character.schema';
-import { CharacterDTO } from '../dto/character.dto';
-import { ApiService } from './api.service';
+import { Character, CharacterDocument } from './schemas/character.schema';
+import { CharacterDTO } from 'src/dto/character.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { ApiDdHelper } from 'src/helpers/api-dd.helper';
 
 @Injectable()
 export class CharacterService {
   constructor(
     @InjectModel(Character.name)
     private characterModel: Model<CharacterDocument>,
-    private readonly apiService: ApiService,
+    @Inject()
+    private readonly apiDdHelper: ApiDdHelper,
   ) {}
 
   async getAllCharacters(): Promise<CharacterDTO[]> {
@@ -28,8 +28,8 @@ export class CharacterService {
     raceIndex: string,
     classIndex: string,
   ): Promise<CharacterDTO> {
-    const race = await this.apiService.getRaceByIndex(raceIndex);
-    const characterClass = await this.apiService.getClassByIndex(classIndex);
+    const race = await this.apiDdHelper.getRaceByIndex(raceIndex);
+    const characterClass = await this.apiDdHelper.getClassByIndex(classIndex);
 
     const newCharacter: CharacterDTO = {
       id: uuidv4(),

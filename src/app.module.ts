@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CharacterController } from './controllers/character.controller';
-import { CharacterService } from './services/character.service';
-import { ApiService } from './services/api.service';
-import { Character, CharacterSchema } from './schemas/character.schema';
+import { Character, CharacterSchema } from './modules/character/schemas/character.schema';
+import { CharacterModule } from './modules/character/character.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/nest'), // Atualize a URI do MongoDB conforme necessário
+    MongooseModule.forRoot('mongodb://localhost:27017/nest'), 
     MongooseModule.forFeature([
       { name: Character.name, schema: CharacterSchema },
     ]),
-    HttpModule,
+    CharacterModule,
+    UserModule,
+    AuthModule,
   ],
-  controllers: [CharacterController],
-  providers: [CharacterService, ApiService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

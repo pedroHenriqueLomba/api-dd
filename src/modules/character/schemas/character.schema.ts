@@ -1,8 +1,7 @@
-// src/schemas/character.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { ClassDTO } from '../dto/class.dto';
-import { RaceDTO } from '../dto/race.dto';
+import { ClassDTO } from 'src/dto/class.dto';
+import { RaceDTO } from 'src/dto/race.dto';
 
 export type CharacterDocument = Character & Document;
 

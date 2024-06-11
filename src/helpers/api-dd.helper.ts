@@ -4,7 +4,7 @@ import { ClassDTO } from '../dto/class.dto';
 import { RaceDTO } from '../dto/race.dto';
 
 @Injectable()
-export class ApiService {
+export class ApiDdHelper {
   constructor(private readonly httpService: HttpService) {}
 
   async getClassByIndex(index: string): Promise<ClassDTO> {
