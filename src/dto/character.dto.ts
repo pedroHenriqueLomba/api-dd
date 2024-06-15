@@ -6,4 +6,6 @@ export class CharacterDTO {
   name: string;
   race: RaceDTO;
   class: ClassDTO;
+  level: number;
+  spells: any[];
 }

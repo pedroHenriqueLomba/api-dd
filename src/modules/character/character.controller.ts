@@ -45,4 +45,12 @@ export class CharacterController {
   deleteCharacter(@Param('id') id: string): Promise<void> {
     return this.characterService.deleteCharacter(id);
   }
+
+  @Post(':id/spells/:spellIndex')
+  async addSpell(
+    @Param('id') id: string,
+    @Param('spellIndex') spellIndex: string
+  ) {
+    return this.characterService.addSpell(id, spellIndex);
+  }
 }

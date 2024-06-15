@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ClassDTO } from 'src/dto/class.dto';
 import { RaceDTO } from 'src/dto/race.dto';
+import { SpellDTO } from 'src/dto/spell.dto';
 
 export type CharacterDocument = Character & Document;
 
@@ -18,6 +19,12 @@ export class Character {
 
   @Prop({ type: Object, required: true })
   class: ClassDTO;
+
+  @Prop({ required: true })
+  level: number;
+
+  @Prop({ type: [Object], default: [] }) 
+  spells: SpellDTO[];
 }
 
 export const CharacterSchema = SchemaFactory.createForClass(Character);

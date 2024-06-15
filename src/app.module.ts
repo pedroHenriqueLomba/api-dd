@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { HttpModule } from '@nestjs/axios';
 import { Character, CharacterSchema } from './modules/character/schemas/character.schema';
 import { CharacterModule } from './modules/character/character.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-
 
 @Module({
   imports: [
@@ -12,6 +12,7 @@ import { AuthModule } from './modules/auth/auth.module';
     MongooseModule.forFeature([
       { name: Character.name, schema: CharacterSchema },
     ]),
+    HttpModule,
     CharacterModule,
     UserModule,
     AuthModule,
