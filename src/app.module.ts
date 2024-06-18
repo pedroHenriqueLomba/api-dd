@@ -5,13 +5,24 @@ import { Character, CharacterSchema } from './modules/character/schemas/characte
 import { CharacterModule } from './modules/character/character.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/nest'), 
-    MongooseModule.forFeature([
-      { name: Character.name, schema: CharacterSchema },
-    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const mongoUrl = configService.get<string>('MONGO_URL');
+        console.log('MONGO_URL:', mongoUrl); // Adicione este log para depuração
+        return {
+          uri: mongoUrl,
+        };
+      },
+      inject: [ConfigService],
+    }),
     HttpModule,
     CharacterModule,
     UserModule,
