@@ -40,7 +40,8 @@ export class CharacterService {
       race,
       class: characterClass,
       level: 1,
-      spells: [],  // Inicializando o array de spells vazio
+      spells: [],
+      itens: []
     };
 
     const createdCharacter = new this.characterModel(newCharacter);
