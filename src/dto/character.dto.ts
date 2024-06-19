@@ -8,4 +8,5 @@ export class CharacterDTO {
   class: ClassDTO;
   level: number;
   spells: any[];
+  itens: any[];
 }
