@@ -1,10 +1,30 @@
 version: '3.8'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '3000:3000'
+    container_name: api-dd
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017/api-dd
+    networks:
+      - default
   db:
     image: mongodb/mongodb-community-server
     ports:
-      - "27017:27017"
+      - '27017:27017'
     container_name: mongodb
     volumes:
       - /home/pedro/volumes-docker/api-dd:/data/db
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
