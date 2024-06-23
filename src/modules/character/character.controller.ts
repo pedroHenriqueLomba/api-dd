@@ -20,7 +20,6 @@ export class CharacterController {
   @UseGuards(AuthGuard)
   @Get()
   getAllCharacters(@Req() request): Promise<CharacterDTO[]> {
-    console.log(request.user);
     return this.characterService.getAllCharacters();
   }
 

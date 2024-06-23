@@ -15,7 +15,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         const mongoUrl = configService.get<string>('MONGO_URL');
-        console.log('MONGO_URL:', mongoUrl); // Adicione este log para depuração
         return {
           uri: mongoUrl,
         };
