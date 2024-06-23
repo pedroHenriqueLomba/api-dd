@@ -3,6 +3,7 @@ import { SavingThrowDTO } from './saving-throw.dto';
 import { EquipmentDTO } from './equipment.dto';
 
 class ItemDTO {
+  index: string;
   desc: string;
   choose: number;
   type: string;

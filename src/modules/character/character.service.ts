@@ -7,6 +7,7 @@ import { CharacterDTO } from 'src/dto/character.dto';
 import { SpellDTO } from 'src/dto/spell.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { ApiDdHelper } from 'src/helpers/api-dd.helper';
+import { ItemDTO } from 'src/dto/item.dto';
 
 @Injectable()
 export class CharacterService {
@@ -41,6 +42,7 @@ export class CharacterService {
       class: characterClass,
       level: 1,
       spells: [],  // Inicializando o array de spells vazio
+      itens: [],  // Inicializando o array de itens vazio	
     };
 
     const createdCharacter = new this.characterModel(newCharacter);
@@ -51,7 +53,7 @@ export class CharacterService {
     await this.characterModel.deleteOne({ id }).exec();
   }
 
-  async addSpell(characterId: string, spellIndex: string): Promise<CharacterDTO> {
+  async addSpell(characterId: string, spellIndex: string): Promise<any> {
     const character = await this.characterModel.findOne({ id: characterId }).exec();
 
     if (!character) {
@@ -67,7 +69,7 @@ export class CharacterService {
     const spellToAdd = spells.find(spell => spell.index === spellIndex);
 
     if (!spellToAdd) {
-      throw new Error('Spell not available for this class and level');
+       return 'You cant add this spell to your character.'
     }
 
     const spellExistsInCharacter = character.spells.some(spell => spell.index === spellIndex);
@@ -79,4 +81,30 @@ export class CharacterService {
 
     return character;
   }
+
+
+ 
+
+async addItem(characterId: string, itemIndex: string): Promise<any> {
+  const character = await this.characterModel.findOne({ id: characterId }).exec();
+
+  if (!character) {
+    throw new Error('Character not found');
+  }
+
+  const itemUrl = `https://www.dnd5eapi.co/api/equipment/${itemIndex}`;
+
+  const response = await this.httpService.get(itemUrl).toPromise();
+  const item: ItemDTO = response.data;
+
+  const itemExistsInCharacter = character.itens.some(item => item.index === itemIndex);
+  if (!itemExistsInCharacter) {
+    character.itens.push(item);
+    await character.save();
+  }
+
+  return character;
 }
+
+}
+

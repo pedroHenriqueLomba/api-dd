@@ -53,4 +53,13 @@ export class CharacterController {
   ) {
     return this.characterService.addSpell(id, spellIndex);
   }
+
+
+  @Post(':id/itens/:itemIndex')
+  async addItem(
+    @Param('id') id: string,
+    @Param('itemIndex') itemIndex: string
+  ) {
+    return this.characterService.addItem(id, itemIndex);
+  }
 }
